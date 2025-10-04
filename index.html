@@ -5,6 +5,15 @@
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Mes liens — Fallou Senghor</title>
   <meta name="description" content="Page de liens responsive : portfolio, CV, LinkedIn, GitHub, WhatsApp" />
+  <!-- Font Awesome CDN -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <!-- PWA manifest -->
+  <link rel="manifest" href="./manifest.json">
+  <meta name="theme-color" content="#0b74ff">
+  <!-- Apple / iOS -->
+  <link rel="apple-touch-icon" href="./gallas.jpeg">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
   <style>
     :root{
       --bg: #f5f7fb;
@@ -92,6 +101,9 @@
     .link-item:focus-visible{outline:3px solid rgba(11,116,255,0.12);outline-offset:3px}
 
     .link-icon{width:52px;height:52px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-weight:600;flex:0 0 52px}
+  .link-icon i{font-size:20px;line-height:1}
+  /* visually hidden for screen readers */
+  .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
     .link-content{flex:1;min-width:0}
     .link-title{font-weight:700;margin:0;font-size:15px}
     .link-desc{margin:6px 0 0 0;color:var(--muted);font-size:13px}
@@ -104,14 +116,28 @@
     .link-action{margin-left:12px}
 
     @media (max-width:480px){
-      .link-item{flex-direction:row;align-items:center}
-      .link-action{margin-left:0;margin-top:8px;width:100%}
-      .link-item .btn{width:100%}
+      /* Keep items inline on small screens, but reduce sizes for compact mobile view.
+         Show only the card title (hide the description) and keep the action icon to the right. */
+      .links-card{padding:12px}
+      .link-item{flex-direction:row;align-items:center;gap:10px;padding:10px}
+      .link-icon{flex:0 0 44px;width:44px;height:44px;border-radius:10px;display:flex;align-items:center;justify-content:center;padding-left:0}
+      .link-icon i{font-size:18px}
+      .link-content{width:auto;min-width:0}
+      .link-title{font-size:14px}
+      .link-desc{display:none}
+      .link-action{margin-left:auto;margin-top:0;width:auto;display:inline-flex}
+      .link-item .btn{width:auto;padding:8px;border-radius:8px}
     }
+
+    /* Install button for A2HS prompt */
+    .install-btn{
+      position:fixed;right:18px;bottom:18px;padding:12px 14px;border-radius:12px;background:var(--accent);color:#fff;border:none;box-shadow:0 6px 18px rgba(11,116,255,0.12);font-weight:700;display:flex;align-items:center;gap:8px;z-index:9999}
+    .install-btn[hidden]{display:none}
 
   </style>
 </head>
 <body>
+  <button id="installBtn" class="install-btn" hidden aria-hidden="true">Installer</button>
   <main class="container" role="main">
 
     <!-- Profile column -->
@@ -139,70 +165,86 @@
 
         <a class="link-item" href="./Fallou-Senghor-CV.pdf" target="_blank" rel="noopener noreferrer">
           <div class="link-icon" style="background:#eef6ff;color:var(--accent)" aria-hidden="true">
-            <!-- CV / document icon (accessible title below) -->
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="cvIconTitle"><title id="cvIconTitle">Icône CV</title><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8l-6-6zM13 3.5V9h5.5L13 3.5zM8 12h8v1H8v-1zm0 3h8v1H8v-1z" fill="currentColor"/></svg>
+            <i class="fa-solid fa-file-pdf" aria-hidden="true"></i>
+            <span class="sr-only">CV (PDF)</span>
           </div>
           <div class="link-content">
             <div class="link-title">Mon CV</div>
             <div class="link-desc">Téléchargeable ou vue en ligne (PDF).</div>
           </div>
           <div class="link-action">
-            <span class="btn btn-primary" aria-hidden="true">Voir</span>
+            <span class="btn btn-primary"><i class="fa-solid fa-eye" aria-hidden="true"></i><span class="sr-only">Voir</span></span>
           </div>
         </a>
 
-        <a class="link-item" href="#" target="_blank" rel="noopener noreferrer">
+        <a class="link-item" href="https://gallas-porfo-moderne.vercel.app/" target="_blank" rel="noopener noreferrer">
           <div class="link-icon" style="background:#eefbf5;color:var(--accent-2)" aria-hidden="true">
-            <svg width="24" height="24" viewBox="0 0 24 24" role="img" aria-labelledby="portIconTitle"><title id="portIconTitle">Icône Portfolio</title><path d="M3 7a2 2 0 012-2h2V4a2 2 0 012-2h6a2 2 0 012 2v1h2a2 2 0 012 2v11a2 2 0 01-2 2H5a2 2 0 01-2-2V7z" fill="currentColor"/></svg>
+            <i class="fa-solid fa-briefcase" aria-hidden="true"></i>
+            <span class="sr-only">Portfolio</span>
           </div>
           <div class="link-content">
             <div class="link-title">Portfolio</div>
             <div class="link-desc">Projets récents, démos et captures d'écran.</div>
           </div>
           <div class="link-action">
-            <span class="btn" aria-hidden="true">Voir</span>
+            <span class="btn"><i class="fa-solid fa-eye" aria-hidden="true"></i><span class="sr-only">Voir</span></span>
           </div>
         </a>
 
-        <a class="link-item" href="#" target="_blank" rel="noopener noreferrer">
+        <a class="link-item" href="https://www.linkedin.com/in/fallou-senghor-98f" target="_blank" rel="noopener noreferrer">
           <div class="link-icon" style="background:#eef7ff;color:#0a66c2" aria-hidden="true">
-            <!-- LinkedIn icon -->
-            <svg width="24" height="24" viewBox="0 0 24 24" role="img" aria-labelledby="liIconTitle"><title id="liIconTitle">Icône LinkedIn</title><path d="M4.98 3.5C4.98 4.604 4.06 5.5 3 5.5 1.94 5.5 1 4.604 1 3.5 1 2.396 1.94 1.5 3 1.5 4.06 1.5 4.98 2.396 4.98 3.5zM.5 8.5h5v13h-5v-13zM9 8.5h4.8v1.8h.1c.7-1.2 2.5-2.5 5.2-2.5 5.6 0 6.7 3.7 6.7 8.5v9.2h-5V16.3c0-2-0.1-4.6-2.8-4.6-2.8 0-3.3 2.2-3.3 4.4v6.2h-5v-13z" fill="currentColor"/></svg>
+            <i class="fa-brands fa-linkedin" aria-hidden="true"></i>
+            <span class="sr-only">LinkedIn</span>
           </div>
           <div class="link-content">
             <div class="link-title">LinkedIn</div>
             <div class="link-desc">Mon profil professionnel.</div>
           </div>
           <div class="link-action">
-            <span class="btn" aria-hidden="true">Voir</span>
+            <span class="btn"><i class="fa-solid fa-eye" aria-hidden="true"></i><span class="sr-only">Voir</span></span>
           </div>
         </a>
 
-        <a class="link-item" href="#" target="_blank" rel="noopener noreferrer">
+        <a class="link-item" href="https://github.com/fallousenghor?tab=repositories" target="_blank" rel="noopener noreferrer">
           <div class="link-icon" style="background:#f3f4f6;color:#111827" aria-hidden="true">
-            <!-- GitHub icon -->
-            <svg width="24" height="24" viewBox="0 0 24 24" role="img" aria-labelledby="ghIconTitle"><title id="ghIconTitle">Icône GitHub</title><path d="M12 .5C5.65.5.75 5.45.75 11.8c0 4.9 3.16 9.05 7.55 10.52.55.1.75-.24.75-.53v-1.86c-3.07.68-3.7-1.48-3.7-1.48-.5-1.26-1.22-1.6-1.22-1.6-1-.68.08-.67.08-.67 1.1.08 1.68 1.14 1.68 1.14.98 1.68 2.55 1.2 3.17.92.1-.72.38-1.2.7-1.48-2.45-.28-5.03-1.24-5.03-5.5 0-1.2.43-2.18 1.14-2.95-.12-.28-.5-1.4.1-2.9 0 0 .9-.28 2.95 1.12a10.2 10.2 0 012.7-.36c.92 0 1.85.12 2.7.36 2.05-1.4 2.95-1.12 2.95-1.12.6 1.5.22 2.62.1 2.9.7.77 1.14 1.75 1.14 2.95 0 4.27-2.6 5.22-5.07 5.5.4.36.76 1.06.76 2.14v3.18c0 .3.2.64.76.53 4.4-1.47 7.55-5.62 7.55-10.52C23.25 5.45 18.35.5 12 .5z" fill="currentColor"/></svg>
+            <i class="fa-brands fa-github" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span>
           </div>
           <div class="link-content">
             <div class="link-title">GitHub</div>
             <div class="link-desc">Mes projets open-source & snippets.</div>
           </div>
           <div class="link-action">
-            <span class="btn" aria-hidden="true">Voir</span>
+            <span class="btn"><i class="fa-solid fa-eye" aria-hidden="true"></i><span class="sr-only">Voir</span></span>
+          </div>
+        </a>
+
+        <!-- Gmail contact -->
+        <a class="link-item" href="mailto:fallousenghor@gmail.com" rel="noopener noreferrer">
+          <div class="link-icon" style="background:#fff2f0;color:#d14836" aria-hidden="true">
+            <i class="fa-solid fa-envelope" aria-hidden="true"></i>
+            <span class="sr-only">Gmail</span>
+          </div>
+          <div class="link-content">
+            <div class="link-title">Email</div>
+            <div class="link-desc">Envoyez-moi un message par Gmail.</div>
+          </div>
+          <div class="link-action">
+            <span class="btn"><i class="fa-solid fa-eye" aria-hidden="true"></i><span class="sr-only">Envoyer</span></span>
           </div>
         </a>
 
         <a class="link-item" href="https://wa.me/221782463262" target="_blank" rel="noopener noreferrer">
           <div class="link-icon" style="background:#ecfff6;color:var(--accent-2)" aria-hidden="true">
-            <!-- WhatsApp icon -->
-            <svg width="24" height="24" viewBox="0 0 24 24" role="img" aria-labelledby="waIconTitle"><title id="waIconTitle">Icône WhatsApp</title><path d="M20.52 3.48A11.9 11.9 0 0012 .5C5.65.5.75 5.4.75 11.75c0 2.07.54 4.02 1.56 5.74L.5 23.5l6.42-1.6c1.64.9 3.47 1.4 5.58 1.4 6.35 0 11.25-4.9 11.25-11.25 0-3.01-1.18-5.86-3.23-7.57zM12 21c-1.8 0-3.5-.5-5-1.4l-.36-.2-3.8 1 1-3.6-.24-.36A9.05 9.05 0 013 11.75 8.25 8.25 0 1119.25 20c-1.48 1.56-3.5 1-4.25 1zM17 14.3c-.4-.2-2.34-1.17-2.7-1.3-.36-.12-.62-.2-.9.2-.25.36-.9 1.3-1.1 1.56-.2.24-.4.3-.74.1-1.02-.5-2.1-1.86-2.9-3.26-.2-.36 0-.56.15-.72.12-.12.2-.36.3-.54.1-.18.05-.36-.05-.52-.1-.18-.9-2.16-1.24-2.95-.33-.78-.67-.6-.9-.6-.24 0-.52 0-.8 0-.28 0-.72.1-1.1.36-.38.24-.9.9-.9 2.2 0 1.3.92 2.56 1.04 2.74.12.18 1.8 2.9 4.36 4A8 8 0 0017 14.3z" fill="currentColor"/></svg>
+            <i class="fa-brands fa-whatsapp" aria-hidden="true"></i>
+            <span class="sr-only">WhatsApp</span>
           </div>
           <div class="link-content">
             <div class="link-title">WhatsApp</div>
             <div class="link-desc">Contact rapide via WhatsApp.</div>
           </div>
           <div class="link-action">
-            <span class="btn btn-wp" aria-hidden="true">Message</span>
+            <span class="btn btn-wp"><i class="fa-solid fa-eye" aria-hidden="true"></i><span class="sr-only">Message</span></span>
           </div>
         </a>
 
@@ -215,6 +257,38 @@
   <script>
     // année dynamique
     document.getElementById('year').textContent = new Date().getFullYear();
+
+    // Service Worker registration
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('./sw.js')
+        .then((reg) => console.log('Service worker registered.', reg))
+        .catch((err) => console.warn('Service worker registration failed:', err));
+    }
+
+    // Before install prompt (Add to home screen) — show a simple install button when available
+    let deferredPrompt;
+    const installBtn = document.getElementById('installBtn');
+
+    window.addEventListener('beforeinstallprompt', (e) => {
+      // Prevent the mini-infobar from appearing on mobile
+      e.preventDefault();
+      deferredPrompt = e;
+      // Show the install button
+      installBtn.hidden = false;
+      installBtn.setAttribute('aria-hidden', 'false');
+    });
+
+    installBtn.addEventListener('click', async () => {
+      if (!deferredPrompt) return;
+      // Show the native prompt
+      deferredPrompt.prompt();
+      const { outcome } = await deferredPrompt.userChoice;
+      // Hide the button afterwards
+      installBtn.hidden = true;
+      installBtn.setAttribute('aria-hidden', 'true');
+      deferredPrompt = null;
+      console.log('User choice for A2HS:', outcome);
+    });
   </script>
 </body>
 </html>

@@ -1,0 +1,22 @@
+{
+  "name": "Fallou Senghor — Liens",
+  "short_name": "Fallou",
+  "description": "Mes liens utiles — CV, portfolio, contact.",
+  "icons": [
+    {
+      "src": "./gallas.jpeg",
+      "sizes": "192x192",
+      "type": "image/jpeg"
+    },
+    {
+      "src": "./gallas.jpeg",
+      "sizes": "512x512",
+      "type": "image/jpeg"
+    }
+  ],
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#f5f7fb",
+  "theme_color": "#0b74ff"
+}
